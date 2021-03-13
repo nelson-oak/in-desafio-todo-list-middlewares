@@ -26,7 +26,15 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  if (user.todos.length > 9 && !user.pro) {
+    return response.status(403).json({
+      error: "Todo's limit already reached! Get pro to create new todos or exclude one!",
+    });
+  }
+
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
